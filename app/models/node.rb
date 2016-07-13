@@ -10,6 +10,7 @@ class Node < ApplicationRecord
 
   # TODO: Refactor
   def place_token!(player)
+    check_player_resource!
     if self.player.blank?
       increment(:level)
       self.player = player
@@ -23,6 +24,13 @@ class Node < ApplicationRecord
         false
       end
     end
+  end
+
+  private
+
+  def check_player_resource!
+    # TODO: Implement this, if resource_items.count not enough, add errors to node
+    true
   end
 
 end
