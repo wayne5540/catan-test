@@ -1,5 +1,8 @@
 class Land < ApplicationRecord
   belongs_to :game
+
+  has_many :land_nodes
+  has_many :nodes, through: :land_nodes
 end
 
 # == Schema Information

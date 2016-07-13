@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   def show
-    @game = Game.where(token: params[:id]).first
+    @game = Game.where(token: params[:game_id]).first
 
     if @game.present?
       render json: @game
@@ -11,6 +11,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create
+    @player = @game.players.create
 
     render json: @game
   end

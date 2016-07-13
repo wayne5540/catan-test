@@ -49,8 +49,8 @@ class GameInitializeService
   def generate_nodes!
     5.times.with_index do |index|
       game.nodes.create(
-        position: index
-        land_ids: land_ids(index)
+        position: index,
+        land_ids: land_ids_for_node(index)
       )
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713061550) do
+ActiveRecord::Schema.define(version: 20160713082254) do
 
   create_table "games", force: :cascade do |t|
     t.string   "token",                  null: false
@@ -18,6 +18,15 @@ ActiveRecord::Schema.define(version: 20160713061550) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.index ["token"], name: "index_games_on_token", unique: true
+  end
+
+  create_table "land_nodes", force: :cascade do |t|
+    t.integer  "land_id"
+    t.integer  "node_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["land_id"], name: "index_land_nodes_on_land_id"
+    t.index ["node_id"], name: "index_land_nodes_on_node_id"
   end
 
   create_table "lands", force: :cascade do |t|
@@ -32,9 +41,19 @@ ActiveRecord::Schema.define(version: 20160713061550) do
 
   create_table "nodes", force: :cascade do |t|
     t.integer  "game_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "position"
+    t.integer  "level",      default: 0
+    t.index ["game_id"], name: "index_nodes_on_game_id"
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string   "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_nodes_on_game_id"
+    t.integer  "game_id"
+    t.index ["game_id"], name: "index_players_on_game_id"
   end
 
 end
