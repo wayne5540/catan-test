@@ -3,6 +3,11 @@ class Player < ApplicationRecord
 
   belongs_to :game
   has_many :nodes
+  has_many :resource_items
+
+  def add_resource!(resource_type, quantity)
+    quantity.times { |_| resource_items.create(resource_type: resource_type) }
+  end
 end
 
 # == Schema Information

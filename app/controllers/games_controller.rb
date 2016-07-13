@@ -5,7 +5,7 @@ class GamesController < ApplicationController
     if @game.present?
       render json: @game
     else
-      error!(1001, "Game is not found.", 404)
+      error!(1002, "Game is not found.", 404)
     end
   end
 
@@ -13,6 +13,8 @@ class GamesController < ApplicationController
     @game = Game.create
     @player = @game.players.create
 
-    render json: @game
+
+    # FIXME: Use ActionController::Serialization but not serializable_hash
+    render json: @game.serializable_hash.merge({ player_token: @player.token })
   end
 end

@@ -16,38 +16,41 @@ class GameInitializeService
 
   private
 
-  # LAND:
-  # -------
-  # |\ 0 /|
-  # | \ / |
-  # |3 x 1|
-  # | / \ |
-  # |/ 2 \|
-  # -------
 
-  # TODO: Randomly generate resources and dice_point
+  # LAND:
+  #    ______
+  #   /\    /\
+  #  / 0\ 1/ 2\
+  # /____\/____\
+  # \    /\    /
+  #  \ 5/ 4\ 3/
+  #   \/____\/
   def generate_lands!
-    [:wood, :rock, :brick, :cotton].each.with_index do |resource, index|
+
+    resources = %w(wood brick metal stone)
+    random_resource = resources.concat(resources.sample(2)).sample(6)
+    random_dice_points = %w(1 2 3 4 5 6).sample(6)
+
+    %w(0 1 2 3 4 5).shuffle.each.with_index do |position, index|
       game.lands.create(
-        resource_type: resource,
-        position: index,
-        dice_point: index
+        resource_type: random_resource[index],
+        position: position,
+        dice_point: random_dice_points[index]
       )
     end
   end
 
-
   # NODE:
-  # 0-----1
-  # |\   /|
-  # | \ / |
-  # |  4  |
-  # | / \ |
-  # |/   \|
-  # 3-----2
+  #    0____1
+  #   /\    /\
+  #  /  \  /  \
+  # 5____\6____\
+  # \    /\    /2
+  #  \  /  \  /
+  #   4/____\/3
 
   def generate_nodes!
-    5.times.with_index do |index|
+    7.times do |index|
       game.nodes.create(
         position: index,
         land_ids: land_ids_for_node(index)
@@ -57,15 +60,15 @@ class GameInitializeService
 
   def land_ids_for_node(index)
     land_positions = case index
-    when 0
-      [0,3]
-    when 1..4
-      [index-1, index]
+    when 0..4
+      [index,index+1]
     when 5
-      [0,1,2,3]
+      [0,5]
+    when 6
+      [0,1,2,3,4,5]
     end
 
-    game.lands.where(position: [0,3]).pluck(:id)
+    game.lands.where(position: land_positions).pluck(:id)
   end
 
 end

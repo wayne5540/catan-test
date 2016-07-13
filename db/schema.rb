@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713082254) do
+ActiveRecord::Schema.define(version: 20160713111838) do
 
   create_table "games", force: :cascade do |t|
     t.string   "token",                  null: false
@@ -45,7 +45,9 @@ ActiveRecord::Schema.define(version: 20160713082254) do
     t.datetime "updated_at",             null: false
     t.integer  "position"
     t.integer  "level",      default: 0
+    t.integer  "player_id"
     t.index ["game_id"], name: "index_nodes_on_game_id"
+    t.index ["player_id"], name: "index_nodes_on_player_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -54,6 +56,14 @@ ActiveRecord::Schema.define(version: 20160713082254) do
     t.datetime "updated_at", null: false
     t.integer  "game_id"
     t.index ["game_id"], name: "index_players_on_game_id"
+  end
+
+  create_table "resource_items", force: :cascade do |t|
+    t.integer  "player_id"
+    t.string   "resource_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["player_id"], name: "index_resource_items_on_player_id"
   end
 
 end

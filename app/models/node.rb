@@ -8,12 +8,20 @@ class Node < ApplicationRecord
   validates :level, numericality: { less_than_or_equal_to: 3 }
   validates :position, presence: true
 
+  # TODO: Refactor
   def place_token!(player)
-    if self.player == player
-      increment(level)
+    if self.player.blank?
+      increment(:level)
+      self.player = player
       self.save
     else
-      self.errors.add(:player, :invalid, "player not match")
+      if self.player == player
+        increment(:level)
+        self.save
+      else
+        self.errors.add(:player, :invalid, "player not match")
+        false
+      end
     end
   end
 
@@ -29,8 +37,10 @@ end
 #  updated_at :datetime         not null
 #  position   :integer
 #  level      :integer          default(0)
+#  player_id  :integer
 #
 # Indexes
 #
-#  index_nodes_on_game_id  (game_id)
+#  index_nodes_on_game_id    (game_id)
+#  index_nodes_on_player_id  (player_id)
 #
