@@ -1,6 +1,17 @@
 class Game < ApplicationRecord
   has_secure_token
+
+  has_many :lands
+
   enum status: { prepare: 0, in_process: 1, finished: 2 }
+
+  after_create :initialize_game!
+
+  private
+
+  def initialize_game!
+    GameInitializeService.new(self).perform!
+  end
 end
 
 # == Schema Information

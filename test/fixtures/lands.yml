@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  resource_type: 1
+  position: 1
+  dice_point: 1
+
+two:
+  resource_type: 1
+  position: 1
+  dice_point: 1

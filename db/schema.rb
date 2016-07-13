@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713044149) do
+ActiveRecord::Schema.define(version: 20160713061550) do
 
   create_table "games", force: :cascade do |t|
     t.string   "token",                  null: false
@@ -18,6 +18,23 @@ ActiveRecord::Schema.define(version: 20160713044149) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.index ["token"], name: "index_games_on_token", unique: true
+  end
+
+  create_table "lands", force: :cascade do |t|
+    t.integer  "game_id"
+    t.string   "resource_type"
+    t.integer  "position"
+    t.integer  "dice_point"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["game_id"], name: "index_lands_on_game_id"
+  end
+
+  create_table "nodes", force: :cascade do |t|
+    t.integer  "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_nodes_on_game_id"
   end
 
 end
