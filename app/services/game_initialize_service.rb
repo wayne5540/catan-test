@@ -28,8 +28,8 @@ class GameInitializeService
   def generate_lands!
 
     resources = %w(wood brick metal stone)
-    random_resource = resources.concat(resources.sample(2)).sample(6)
-    random_dice_points = %w(1 2 3 4 5 6).sample(6)
+    random_resource = resources.concat(resources.sample(2)).shuffle
+    random_dice_points = %w(1 2 3 4 5 6).shuffle
 
     %w(0 1 2 3 4 5).shuffle.each.with_index do |position, index|
       game.lands.create(
