@@ -154,5 +154,5 @@ $ rails s
 * Trade resources with other players
 * Game master - check if game over or not
 * Add test
-
+* Better error handling and message
 
